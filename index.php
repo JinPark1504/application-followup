@@ -2,7 +2,9 @@
 
 class Interview
 {
-	public $title = 'Interview test';
+	// adding 'static' to use scope resolution operator(::)
+	// public $title = 'Interview test';
+	public static $title = 'Interview test';
 }
 
 $lipsum = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus incidunt, quasi aliquid, quod officia commodi magni eum? Provident, sed necessitatibus perferendis nisi illum quos, incidunt sit tempora quasi, pariatur natus.';
@@ -15,7 +17,13 @@ $people = array(
 	array('id'=>5, 'first_name'=>'Doug', 'last_name'=>'Simons', 'email'=>'doug.simons@hotmail.com')
 );
 
-$person = $_POST['person'];
+// using condition for checking if the person has been set
+// $person = $_POST['person'];
+if(isset($_POST['person'])) {
+    $person = $_POST['person'];
+} else {
+    $person = [];
+}
 
 ?>
 
@@ -34,16 +42,20 @@ $person = $_POST['person'];
 
 	<?php
 	// Print 10 times
-	for ($i=10; $i<0; $i++) {
-		echo '<p>'+$lipsum+'</p>';
+	// changing 'for statemant' for printing 10 times
+	// for ($i=10; $i<0; $i++) {
+	for ($i=0; $i<10; $i++) {
+		// changing '+' to '.'
+		// echo '<p>'+$lipsum+'</p>';
+		echo '<p>' .$lipsum .'</p>';
 	}
 	?>
 
 
 	<hr>
 
-
-	<form method="get" action="<?=$_SERVER['REQUEST_URI'];?>">
+	<!-- changing method from get to post beacuse of using $_POST -->
+	<form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
 		<p><label for="firstName">First name</label> <input type="text" name="person[first_name]" id="firstName"></p>
 		<p><label for="lastName">Last name</label> <input type="text" name="person[last_name]" id="lastName"></p>
 		<p><label for="email">Email</label> <input type="text" name="person[email]" id="email"></p>
@@ -69,9 +81,10 @@ $person = $_POST['person'];
 		<tbody>
 			<?php foreach ($people as $person): ?>
 				<tr>
-					<td><?=$person->first_name;?></td>
-					<td><?=$person->last_name;?></td>
-					<td><?=$person->email;?></td>
+					<!-- changing "$person->first_name" to "$person['first_name']" -->
+					<td><?=$person['first_name'];?></td>
+					<td><?=$person['last_name'];?></td>
+					<td><?=$person['email'];?></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
